@@ -2,6 +2,7 @@
   <div class="flex flex-col h-screen max-h-screen">
     <div
       class="
+        z-20
         flex
         justify-center
         relative
@@ -46,12 +47,45 @@
           />
         </div>
       </div>
+      <!-- show ip information -->
+      <Info />
     </div>
+    <!-- Map -->
+    <div id="map" class="h-full z-10"></div>
   </div>
 </template>
 
 <script>
-export default {}
+import Info from '@/components/Info.vue'
+import leaflet from 'leaflet'
+import { onMounted, ref } from '@vue/runtime-core'
+export default {
+  name: 'Home',
+  components: {
+    Info,
+  },
+  setup() {
+    const map = ref()
+    let token = process.env.VUE_APP_TOKEN
+    onMounted(() => {
+      map.value = leaflet.map('map').setView([51.505, -0.09], 13)
+      leaflet
+        .tileLayer(
+          `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${token}`,
+          {
+            attribution:
+              'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: `${token}`,
+          }
+        )
+        .addTo(map.value)
+    })
+  },
+}
 </script>
 
 <style></style>
