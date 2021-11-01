@@ -14,7 +14,9 @@
       "
     >
       <div class="w-full max-w-screen-sm">
-        <h1 class="text-white text-center text-3xl pb-4">IP Address Tracker</h1>
+        <h1 class="text-white text-center text-3xl pb-4 font-semibold">
+          IP Address Tracker
+        </h1>
         <div class="flex relative">
           <span class="absolute top-2 left-2">
             <svg
