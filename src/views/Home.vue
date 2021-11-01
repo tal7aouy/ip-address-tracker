@@ -44,7 +44,7 @@
               font-medium
               shadow-lg
             "
-            placeholder="IP Address"
+            placeholder="IP Address (IPv4, IPv6)"
           />
           <button
             class="
@@ -80,7 +80,7 @@
         </div>
       </div>
       <!-- show ip information -->
-      <Info v-if="ipData" />
+      <Info v-if="ipData" :ipData="ipData" />
     </div>
     <!-- Map -->
     <div id="map" class="h-full z-10"></div>
@@ -123,12 +123,23 @@ export default {
     async function getIpData() {
       try {
         const response = await axios.get(
-          `https://geo.ipify.org/api/v2/country?apiKey=at_pm7IYOnpEsdQogLHaEcZR216KGxTX&ipAddress=${queryIp.value}`
+          `https://geo.ipify.org/api/v2/country,city?apiKey=at_pm7IYOnpEsdQogLHaEcZR216KGxTX&ipAddress=${queryIp.value}`
         )
         const result = response.data
         console.log(result)
+        ipData.value = {
+          ip: result.ip,
+          state: result.location.region,
+          timezone: result.location.timezone,
+          isp: result.isp,
+          lat: result.location.lat,
+          lng: result.location.lng,
+        }
+        leaflet.marker([ipData.value.lat, ipData.value.lng]).addTo(map.value)
+        // reset view
+        map.value.setView([ipData.value.lat, ipData.value.lng], 13)
       } catch (err) {
-        alert(err.message)
+        console.log(err.message)
       }
     }
     return {
