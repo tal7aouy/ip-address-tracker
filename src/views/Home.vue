@@ -105,6 +105,7 @@ export default {
     const queryIp = ref('')
     const ipData = ref(null)
     let token = process.env.VUE_APP_TOKEN
+    let ipKey = process.env.VUE_APP_API_KEY
     onMounted(() => {
       map.value = leaflet.map('map').setView([51.505, -0.09], 13)
       leaflet
@@ -125,7 +126,7 @@ export default {
     async function getIpData() {
       try {
         const response = await axios.get(
-          `https://geo.ipify.org/api/v2/country,city?apiKey=at_pm7IYOnpEsdQogLHaEcZR216KGxTX&ipAddress=${queryIp.value}`
+          `https://geo.ipify.org/api/v2/country,city?apiKey=${ipKey}&ipAddress=${queryIp.value}`
         )
         const result = response.data
         console.log(result)
