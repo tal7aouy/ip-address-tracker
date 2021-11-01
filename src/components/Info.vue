@@ -1,6 +1,12 @@
 <script>
 export default {
   name: 'Info',
+  props: {
+    ipData: {
+      type: Object,
+      required: true,
+    },
+  },
 }
 </script>
 <template>
@@ -23,25 +29,25 @@ export default {
     <!-- item -->
     <div class="flex flex-col">
       <h3 class="text-xs mb-2 uppercase">Ip Address</h3>
-      <span class="text-2xl">8.8.8.8</span>
+      <span class="text-2xl">{{ ipData.ip }}</span>
     </div>
     <!-- end item -->
     <!-- item2 -->
     <div class="flex flex-col">
       <h3 class="text-xs mb-2 uppercase">Location</h3>
-      <span class="text-2xl">New York</span>
+      <span class="text-2xl">{{ ipData.state }}</span>
     </div>
     <!-- end item2 -->
     <!-- item3 -->
     <div class="flex flex-col">
       <h3 class="text-xs mb-2 uppercase">Timezone</h3>
-      <span class="text-2xl">UTC 08:30</span>
+      <span class="text-2xl">{{ ipData.timezone }}</span>
     </div>
     <!-- end item3 -->
     <!-- item4 -->
     <div class="flex flex-col">
       <h3 class="text-xs mb-2 uppercase">Isp</h3>
-      <span class="text-2xl">Google</span>
+      <span class="text-2xl">{{ ipData.isp }}</span>
     </div>
     <!-- end item4 -->
   </div>
